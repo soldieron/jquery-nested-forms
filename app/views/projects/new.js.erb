@@ -1,0 +1,90 @@
+/*
+Interface Requirements:
+1) Child form exists directly within parent with class "childArea", e.g.
+	<div id="tasks" class="childArea">	
+	
+		  <% project_form.fields_for :tasks do |task_form| %>
+			<%= render :partial => 'task', :locals => { :task_form => task_form } %>
+		  <% end %>
+	</div>
+2) Each child form elements exists within parent with class "copyForm"
+3) Every form element has class "formElement"
+4) Link to add children has id "addChild"
+5) Links to remove children have class "removeChild"
+
+*/
+
+$(document).ready(function(){
+  bindRemovals();
+
+  $("#addChild").click(function(e){
+    e.preventDefault();
+ 
+	//get the last task and copy it
+	var myArea = $(".copyForm:last").clone();
+	//I'll be using the id of the copied task a lot
+    var varForNumberCatching = myArea.find(".formElement").attr("id");
+
+	//grab the form index number from the id, this provides coverage up to 99
+    var match = /[0-9][0-9]/.exec(varForNumberCatching);
+    if (match == null) {
+	   match = /[0-9]/.exec(varForNumberCatching);
+	}
+	
+	//check if last one is a new record
+	newRecord = varForNumberCatching.match(/_new_/);
+	var numKey = parseInt(match[0]);
+
+	//cycle through all the form elements
+
+	myArea.find(".formElement").each (
+			function(){ 
+				var idArea;
+				var nameArea;
+				//if new record, copy both the name and id attributes, adding the index by 1, and store them
+				if (newRecord) { 
+				 	idArea = $(this).attr("id").replace(numKey+"", (numKey+1)+"");
+				    nameArea = $(this).attr("name").replace(numKey+"", (numKey+1)+"");
+				} else {
+				//if it's not, reset index to 'new_1'
+					idArea = $(this).attr("id").replace(numKey+"", "new_1");
+				    nameArea = $(this).attr("name").replace(numKey+"", "new_1");
+				}
+				//edit the copied task with your stored attributes
+				$(this).attr("id", idArea);
+				$(this).attr("name", nameArea);
+			
+		}
+	);
+	
+	if (newRecord == null) {
+		myArea.find("span").remove();
+		myArea.append("<a href='#' class='removeChild'>Remove</a>")
+	}
+    //add the edited task to the bottom of the tasks
+    console.log(myArea.outerHTML())
+	$(".childArea").append(myArea.outerHTML());
+	
+	//take away any copied values from the task you just put down
+	var myArea = $(".copyForm:last .formElement").clearForm();
+	bindRemovals();
+    
+  });
+  
+  function bindRemovals() {
+  $(".removeChild").bind("click", function(e){
+	e.preventDefault();
+
+	if ( $(".copyForm").size() !== 1) {
+		$(this).parents(".copyForm").remove();
+	} else {
+	  var myArea = $(".copyForm:last .formElement").clearForm();	
+	}
+  });
+
+  }
+
+
+});
+
+

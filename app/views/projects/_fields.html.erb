@@ -1,0 +1,19 @@
+<% form_for @project do |project_form| %>
+
+  <%= project_form.label :name %>
+  <%= project_form.text_field :name %><br/>
+
+<a id="addChild" href="#addTask">Add Task</a>
+<a name="addTask"></a>
+
+<div id="tasks" class="childArea">	
+	
+	  <% project_form.fields_for :tasks do |task_form| %>
+		<%= render :partial => 'task', :locals => { :task_form => task_form } %>
+	  <% end %>
+
+</div>
+
+
+  <%= submit_tag %>
+<% end %>

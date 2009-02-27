@@ -1,0 +1,19 @@
+<div class="task copyForm">
+    <b>Task</b>
+    <p>Name:</p>
+    <p><%= task_form.text_field :name, :class=>"formElement" %></p>
+    <p>Description</p>
+    <p><%= task_form.text_area :description, :class=>"formElement" %></p>
+    <span>
+	<p>
+    <% unless task_form.object.new_record? %>
+      <%= task_form.check_box '_delete' %> | Remove
+    
+    <% else %>
+		<a href="#delete" class="removeChild">Delete Task</a>
+		<a name="delete"></a>
+	<% end %></p></span>
+
+
+
+</div>

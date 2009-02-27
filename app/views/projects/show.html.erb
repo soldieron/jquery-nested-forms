@@ -1,0 +1,12 @@
+<p>
+  <b>Name:</b>
+  <%=h @project.name %>
+</p>
+
+<% for task in @project.tasks %>
+  <p>Task: <%= task.name %></p>
+  <p>Description: <%= task.description %></p>
+<% end %>
+
+<%= link_to 'Edit', edit_project_path(@project) %> |
+<%= link_to 'Back', projects_path %>
