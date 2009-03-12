@@ -1,1 +1,13 @@
 I'll get to this...
+
+Interface Requirements:
+1) Child form exists directly within parent with class "childArea", e.g.
+	<div id="tasks" class="childArea">
+		  <% project_form.fields_for :tasks do |task_form| %>
+			<%= render :partial => 'task', :locals => { :task_form => task_form } %>
+		  <% end %>
+	</div>
+2) Each child form elements exists within parent with class "copyForm"
+3) Every form element has class "formElement"
+4) Link to add children has id "addChild"
+5) Links to remove children have class "removeChild"
