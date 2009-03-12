@@ -1,6 +1,6 @@
 ActionController::Routing::Routes.draw do |map|
   map.resources :projects
-
+  map.root :controller => "projects"
   # The priority is based upon order of creation: first created -> highest priority.
 
   # Sample of regular route:

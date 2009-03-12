@@ -1,4 +1,4 @@
-I'll get to this...
+All the action's in Projects...the javascript file is one of it's views as new.js.erb
 
 Interface Requirements:
 1) Child form exists directly within parent with class "childArea", e.g.
